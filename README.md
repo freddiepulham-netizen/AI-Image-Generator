@@ -4,6 +4,17 @@ A production-ready AI image generation web app powered by [Pollinations AI](http
 
 **Live Preview:** [https://main.ai-image-generator-5li.pages.dev](https://main.ai-image-generator-5li.pages.dev)
 
+## Features
+
+- **AI Image Generation**: Turn text prompts into stunning visuals using the Flux model.
+- **Quick Try Presets**: Instant generation buttons for popular themes (Cyberpunk, Space, etc.).
+- **Secure Backend API**: Worker-based gateway that protects your secret keys.
+- **Unique Generations**: Every image is unique thanks to random seed implementation.
+- **Global Usage Cap**: Built-in 1,000 images/week global limit via Cloudflare KV.
+- **IP-Based Rate Limiting**: Automatic protection against spam (1 req/60s per IP).
+- **Responsive UI**: Modern, dark-themed, and glassmorphic design optimized for all devices.
+- **Privacy Focused**: No sign-up required, no user data tracking.
+
 ![AI Image Generator Preview](./preview.png)
 
 ## Architecture
