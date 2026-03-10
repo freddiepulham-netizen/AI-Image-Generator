@@ -8,15 +8,33 @@ A production-ready AI image generation web app powered by [Pollinations AI](http
 
 ## Architecture
 
-```
-User Browser
-  → Cloudflare Pages (React frontend)
-  → Cloudflare Worker (POST /api/generate)
-  → returns Pollinations image URL
-  → Browser loads image directly from Pollinations
+```mermaid
+graph TD
+    User([User Browser])
+    
+    subgraph Cloudflare ["Cloudflare Infrastructure"]
+        Pages["Cloudflare Pages<br/>(React Frontend)"]
+        Worker["Cloudflare Worker<br/>(Backend API)"]
+        KV[("Cloudflare KV<br/>(Rate Limiting)")]
+    end
+    
+    Pollinations["Pollinations AI<br/>(Image Engine)"]
+
+    User -- "1. Load App" --> Pages
+    User -- "2. POST /api/generate" --> Worker
+    Worker -- "3. Check/Update Limits" --> KV
+    Worker -- "4. Generate Signed URL" --> Pollinations
+    Worker -- "5. Return Image URL" --> User
+    User -- "6. Load Image Directly" --> Pollinations
+
+    style User fill:#f9f,stroke:#333,stroke-width:2px
+    style Pollinations fill:#00f,stroke:#fff,stroke-width:2px,color:#fff
+    style Worker fill:#f90,stroke:#333,stroke-width:2px
+    style Pages fill:#f90,stroke:#333,stroke-width:2px
+    style KV fill:#f90,stroke:#333,stroke-width:2px
 ```
 
-The Worker **never** downloads, streams, or proxies the image.
+The Worker **never** downloads, streams, or proxies the image. This ensures high performance and zero bandwidth costs for your infrastructure.
 
 ---
 
