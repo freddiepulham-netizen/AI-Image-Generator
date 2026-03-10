@@ -6,7 +6,8 @@
  * from Pollinations — this function never fetches the image itself.
  */
 
-const WORKER_URL = import.meta.env.VITE_WORKER_URL || "";
+// Trim trailing slash to avoid double slashes like //api/generate
+const WORKER_URL = (import.meta.env.VITE_WORKER_URL || "").replace(/\/$/, "");
 
 /**
  * @param {string} prompt         - User's text prompt
